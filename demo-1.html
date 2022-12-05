@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo-1</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        table {
+            padding: 5px;
+            font-size: large;
+        }
+
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #cecece;
+        }
+
+        input {
+            padding: 4px;
+        }
+
+        .main-div {
+            display: flex;
+            padding: 25px;
+        }
+
+        .form-div {
+            padding: 25px;
+            margin: 25px;
+        }
+
+        .display-div {
+            padding: 20px;
+            margin-left: 30px;
+        }
+
+        .display-div table thead th {
+            padding: 20px;
+            border-bottom: 1px solid #cecece;
+            background-color: #fafafa;
+        }
+
+        .display-div table tbody tr:hover {
+            background-color: #fafafa;
+        }
+
+        .fa-trash {
+            padding: 5px;
+        }
+
+        .fa-pen-to-square {
+            padding: 4px;
+        }
+
+        a {
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .button-row button {
+            padding: 5px;
+            float: right;
+            margin: 2px;
+        }
+        .error{
+            margin: 0;
+            color: rgb(245, 45, 45);
+        }
+        .searchBox{
+            width: 70%;
+            outline: none;
+            border: 1px solid #cecece;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: medium;
+        }
+        .searchCencel{
+            display: none;
+        }
+        /* #btnupdate,#btnupdateCencel{
+            display: none;
+        } */
+        .fa-arrow-up-z-a{
+            margin-right: 5px;
+            margin-left: -10px;
+            cursor: pointer;
+            display: none;
+        }
+        .fa-arrow-up-a-z{
+            margin-right: 5px;
+            margin-left: -10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body onload="return displayTableData('')">
+    <div class="main-div">
+        <div class="form-div">
+            <form action="" method="post">
+                <table class="form-table">
+                    <tr>
+                        <td>Name:</td>
+                        <td><p class="error"></p><input type="text" name="name" ></td>
+                    </tr>
+                    <tr>
+                        <td>Email:</td>
+                        <td><p class="error"></p><input type="email" name="email" ></td>
+                    </tr>
+                    <tr>
+                        <td>Gender:</td>
+                        <td> <p class="error"></p><input type="radio" name="gender"  value="Male"><label for="male">Male</label>
+                            <input type="radio" name="gender"  value="Female"><label
+                                for="female">Female</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Hobbies:</td>
+                        <td><p class="error"></p><input type="checkbox" name="hobby"  value="Reading"><label
+                                for="Reading">Reading</label>
+                            <input type="checkbox" name="hobby"  value="Travelling"><label
+                                for="Travelling">Travelling</label>
+                            <input type="checkbox" name="hobby"  value="Sports"><label
+                                for="Sports">Sports</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Age:</td>
+                        <td><p class="error"></p><input type="number" name="age" ></td>
+                    </tr>
+                    <tr>
+                        <td>County:</td>
+                        <td><p class="error"></p>
+                            <select name="country"  onchange="return affectState(this.value)">
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>State:</td>
+                        <td><p class="error"></p>
+                            <select name="state" onchange="return affectCity(this.value)">
+                                <option value="">Select State</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>City:</td>
+                        <td><p class="error"></p>
+                            <select name="city">
+                                <option value="">Select City</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr> 
+                        <td colspan="2" class="button-row">
+                            <!--  -->
+                            <button onclick="return validateData(),dataInsert()">Submit</button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <div class="display-div">
+            <table>
+                <thead >
+                    <th colspan="10">
+                        <input type="text" placeholder="Search..." class="searchBox">
+                        <button style="padding: 9px;" onclick="return searchRecord()">Search</button>
+                        <button style="padding: 9px;" class="searchCencel" onclick="clearSearchData()">Cancel</button>
+                    </th>
+                </thead>
+                <thead>
+                    <th><i class="fa-solid fa-arrow-up-z-a" onclick="return descending()"></i><i class="fa-solid fa-arrow-up-a-z" onclick="return ascending()"></i>Name</th>
+                    <th>Email</th>
+                    <th>Gender</th>
+                    <th>Hobbies</th>
+                    <th>Age</th>
+                    <th>County</th>
+                    <th>State</th>
+                    <th>City</th>
+                    <th>Creation Time</th>
+                    <th>Action</th>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="./city-state-nation-array.js"></script>
+    <script src="./dependent-dropdown.js"></script>
+    <script src="./dispay-table-onload.js"></script>
+    <script src="./data-submit-array.js"></script>
+    <script src="./update-delete.js"></script>
+    <script src="./validation.js"></script>
+    <script src="./searchRecord.js"></script>
+    <script src="./sorting.js"></script>
+</body>
+
+</html>
